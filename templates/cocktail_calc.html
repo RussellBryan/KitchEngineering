@@ -1,0 +1,38 @@
+{% extends "layout.html"%}
+{% block body%}
+	<h2>The Cocktail Calculator</h2>
+	<form action="{{url_for('calc')}}" method=post>
+		Base Spirts ABV: 
+			<input type='text' name='base_abv'> 
+		Amount:
+			<input type='text' name='a_base'>
+			<br>
+		{% for n_inds in range(Num) %}
+		Ingredient: 
+				<select name='in{{loop.index}}'>
+					{% for t in inds['Ingredient'] %}
+					<option value={{t}}>{{t}}</option>
+					{% endfor %}
+				</select>
+		Amount:
+			<input type='text' name='a{{ loop.index}}'>
+		<br>
+		{% endfor %}
+		<input type=submit value=Calculate>
+	</form>
+
+		<form action="{{ url_for('more')}}" method=post>
+			<input type=submit value=More>
+		</form>
+		<form action="{{ url_for('less') }}" method=post>
+			<input type=submit value=Less>
+		</form>
+	{%if abv is defined%}
+	<body>
+		ABV: {{abv}} <br>
+		Sugar: {{sugar}} <br>
+		Acid: {{acid}} <br>
+	</body>
+	{% endif %}
+
+{% endblock %}

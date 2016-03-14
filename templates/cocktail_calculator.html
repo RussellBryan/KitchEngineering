@@ -1,0 +1,35 @@
+{% extends "layout.html"%}
+{% block body%}
+	<h2>The Cocktail Calculator</h2>
+	<form action="{{url_for('cocktail_calculator.calc')}}" method=post>
+		Base Spirts ABV:
+			<input type='text' name='base_abv' id='base_abv' value={{G.spirit_abv}}>
+		Amount:
+			<input type='text' name='a_base' id='a_base' value={{G.spirit_amount}}>
+			<br>
+		{% for n_inds in range(G.Num) %}
+		Ingredient:
+				<select name='in{{loop.index}}' id = 'in{{loop.index}}'>
+					{% set sel = G.ingredients[loop.index-1] %}
+					{% for t in G.inds['Ingredient'] %}
+					<option value={{t.replace(' ', '_')}} {% if t.replace(' ', '_') == sel %} selected="selected" {% endif %} >{{t}}</option>
+					{% endfor %}
+				</select>
+		Amount:
+			<input type='text' name='a{{ loop.index}}' id = 'a{{ loop.index}}' value={{G.amounts[loop.index-1]}}>
+		<br>
+		{% endfor %}
+		<input type=submit name='submit' value='Calculate'>
+		<br>
+		<input type=submit name='submit' value='More'>
+		<input type=submit name='submit' value='Less'>
+	</form>
+	{%if G.abv is defined%}
+	<body>
+		ABV: {{G.abv}} <br>
+		Sugar: {{G.sugar}} <br>
+		Acid: {{G.acid}} <br>
+	</body>
+	{% endif %}
+
+{% endblock %}
